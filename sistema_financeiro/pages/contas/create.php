@@ -138,14 +138,130 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include '../../templates/header.php';
 ?>
     <link rel="stylesheet" href="../../assets/css/style.css">
+<style>
+/* Botões principais */
+.btn-success {
+    background: #22c55e;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+.btn-success:hover {
+    background: #16a34a;
+}
+.btn-secondary {
+    background: #6b7280;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.2s;
+    color: #fff;
+}
+.btn-secondary:hover {
+    background: #4b5563;
+    color: #fff;
+}
+.btn-voltar {
+    background: #f3f4f6;
+    color: #374151;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    padding: 0.6rem 1.4rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: background 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.btn-voltar:hover {
+    background: #e5e7eb;
+    color: #111827;
+    text-decoration: none;
+}
+.btn-voltar i {
+    font-size: 1.1em;
+}
+
+/* Ajuste dos cards */
+.card {
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: none;
+}
+.card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    border-radius: 14px 14px 0 0;
+    font-weight: 600;
+}
+
+/* Inputs e selects */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+.form-control:focus, .form-select:focus {
+    border-color: #2563eb;
+    background: #fff;
+}
+.form-label {
+    font-weight: 500;
+}
+.form-check-input {
+    border-radius: 4px;
+}
+
+/* Valor por parcela */
+#valor_parcela {
+    font-weight: 600;
+    color: #2563eb;
+    background: #f4f6fa;
+    border-radius: 8px;
+    padding: 0.5em 1em;
+    display: inline-block;
+    min-width: 110px;
+}
+
+/* Badge categorias */
+.badge {
+    border-radius: 8px;
+    padding: 0.4em 0.8em;
+    font-size: 0.95em;
+    color: #fff !important;
+    font-weight: 500;
+    display: inline-block;
+}
+.badge-success { background: #22c55e !important; }
+.badge-danger { background: #ef4444 !important; }
+.me-1 { margin-right: 0.5rem !important; }
+.mb-1 { margin-bottom: 0.3rem !important; }
+
+/* Responsividade */
+@media (max-width: 991px) {
+    .col-md-8, .col-md-4 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .card {
+        margin-bottom: 1.5rem;
+    }
+}
+</style>
+
 <div class="row">
     <div class="col-12">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
             <div>
-                <h1><?php echo $is_parcelado ? 'Nova Conta Parcelada' : 'Nova Conta'; ?></h1>
-                <p class="text-muted">Adicionar nova <?php echo $is_parcelado ? 'conta parcelada' : 'receita ou despesa'; ?></p>
+                <h1 class="mb-1"><?php echo $is_parcelado ? 'Nova Conta Parcelada' : 'Nova Conta'; ?></h1>
+                <p class="text-muted mb-0">Adicionar nova <?php echo $is_parcelado ? 'conta parcelada' : 'receita ou despesa'; ?></p>
             </div>
-            <a href="index.php" class="btn btn-secondary">Voltar</a>
+            <a href="index.php" class="btn btn-voltar mt-3 mt-md-0">
+                <i class="fa fa-arrow-left"></i> Voltar
+            </a>
         </div>
     </div>
 </div>
