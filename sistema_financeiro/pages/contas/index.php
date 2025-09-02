@@ -378,10 +378,6 @@ include '../../templates/header.php';
                 <h1>Contas</h1>
                 <p class="text-muted">Gerenciar receitas e despesas</p>
             </div>
-            <div>
-                <a href="create.php" class="btn btn-success">Nova Conta</a>
-                <a href="create.php?parcelado=1" class="btn btn-primary">Conta Parcelada</a>
-            </div>
         </div>
     </div>
 </div>
@@ -416,133 +412,13 @@ include '../../templates/header.php';
     </div>
 </div>
 
-<!-- Filtros -->
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="mb-0">Filtros</h6>
-            </div>
-            <div class="card-body">
-                <form method="GET" class="filters-form">
-                    <div class="row">
-                        <div class="col-md-4 col-lg-3">
-                            <div class="form-group">
-                                <label class="form-label">Buscar</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       name="search" 
-                                       placeholder="Buscar descrição..."
-                                       value="<?php echo htmlspecialchars($filters['search']); ?>">
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4 col-lg-2">
-                            <div class="form-group">
-                                <label class="form-label">Tipo</label>
-                                <select class="form-control form-select" name="tipo">
-                                    <option value="">Todos os tipos</option>
-                                    <option value="receita" <?php echo $filters['tipo'] === 'receita' ? 'selected' : ''; ?>>Receita</option>
-                                    <option value="despesa" <?php echo $filters['tipo'] === 'despesa' ? 'selected' : ''; ?>>Despesa</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4 col-lg-2">
-                            <div class="form-group">
-                                <label class="form-label">Status</label>
-                                <select class="form-control form-select" name="status">
-                                    <option value="">Todos os status</option>
-                                    <option value="pendente" <?php echo $filters['status'] === 'pendente' ? 'selected' : ''; ?>>Pendente</option>
-                                    <option value="pago" <?php echo $filters['status'] === 'pago' ? 'selected' : ''; ?>>Pago</option>
-                                    <option value="vencido" <?php echo $filters['status'] === 'vencido' ? 'selected' : ''; ?>>Vencido</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-2">
-                            <div class="form-group">
-                                <label class="form-label">Categoria</label>
-                                <select class="form-control form-select" name="categoria">
-                                    <option value="">Todas categorias</option>
-                                    <?php foreach ($categorias as $categoria): ?>
-                                        <option value="<?php echo $categoria['id']; ?>" 
-                                                <?php echo $filters['categoria'] == $categoria['id'] ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($categoria['nome']); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <label class="form-label">Vencimentos Recentes</label>
-                                <select class="form-control form-select" name="vencimentos_recentes">
-                                    <option value="">Todos os vencimentos</option>
-                                    <option value="7" <?php echo $filters['vencimentos_recentes'] === '7' ? 'selected' : ''; ?>>Próximos 7 dias</option>
-                                    <option value="15" <?php echo $filters['vencimentos_recentes'] === '15' ? 'selected' : ''; ?>>Próximos 15 dias</option>
-                                    <option value="30" <?php echo $filters['vencimentos_recentes'] === '30' ? 'selected' : ''; ?>>Próximos 30 dias</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <label class="form-label">Data Início</label>
-                                <input type="date" 
-                                       class="form-control" 
-                                       name="data_inicio" 
-                                       value="<?php echo htmlspecialchars($filters['data_inicio']); ?>">
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6 col-lg-3">
-                            <div class="form-group">
-                                <label class="form-label">Data Fim</label>
-                                <input type="date" 
-                                       class="form-control" 
-                                       name="data_fim" 
-                                       value="<?php echo htmlspecialchars($filters['data_fim']); ?>">
-                            </div>
-                        </div>
-                        
-                        <div class="col-12 col-lg-6">
-                            <div class="form-group">
-                                <label class="form-label">&nbsp;</label>
-                                <div class="filter-buttons">
-                                    <button type="submit" class="btn btn-primary">
-                                        <i class="fas fa-search"></i> Filtrar
-                                    </button>
-                                    <a href="index.php" class="btn btn-secondary">
-                                        <i class="fas fa-times"></i> Limpar
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="d-flex align-items-center mb-4">
     <div class="dropdown">
-        <button class="btn btn-main dropdown-toggle" type="button" id="btnCriarConta" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-plus"></i> Criar Conta
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="btnCriarConta">
-            <li>
-                <a class="dropdown-item" href="create.php">Conta Simples</a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="create.php?parcelado=1">Conta Parcelada</a>
-            </li>
-        </ul>
-    </div>
+                <div>
+                <a href="create.php" class="btn btn-success">Nova Conta</a>
+                <a href="create.php?parcelado=1" class="btn btn-primary">Conta Parcelada</a>
+            </div>
     <button class="btn btn-filtros" type="button" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#painelFiltros" aria-expanded="false" aria-controls="painelFiltros">
         <i class="fa fa-filter"></i> Filtros
     </button>
@@ -662,9 +538,6 @@ include '../../templates/header.php';
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5 class="mb-0">Lista de Contas (<?php echo $total_records; ?>)</h5>
-                <a href="create.php" class="btn btn-success btn-sm">
-                    <i class="fa fa-plus"></i> Nova Conta
-                </a>
             </div>
             <div class="card-body">
                 <?php if (empty($contas)): ?>
