@@ -119,116 +119,161 @@ include '../../templates/header.php';
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <style>
-/* Resumo */
+body, .main-content {
+    background: #181f25 !important;
+    color: #f3f4f6;
+}
+.card, .table, .filters-form, .stats-grid {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
 .stats-grid {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    margin-bottom: 1.5rem;
 }
 .stat-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    padding: 1.2rem 2rem;
-    min-width: 180px;
     flex: 1 1 180px;
-    text-align: center;
-    margin-bottom: 0.5rem;
-    transition: box-shadow 0.2s;
+    min-width: 200px;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    background: #232b32;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+    margin-bottom: 0;
 }
-.stat-card:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+.stat-card .stat-label {
+    font-size: 1.1rem;
+    color: #cbd5e1;
+    margin-top: 0.5rem;
 }
-.stat-value {
-    font-size: 1.6rem;
+.stat-card .stat-value {
+    font-size: 2rem;
     font-weight: 700;
-    margin-bottom: 0.3rem;
 }
-.stat-label {
-    font-size: 1rem;
-    color: #888;
+.stat-card.stat-receita { background: #eafcf3; color: #16a34a; }
+.stat-card.stat-despesa { background: #fef2f2; color: #dc2626; }
+.stat-card.stat-paga { background: #e0f2fe; color: #2563eb; }
+.stat-card.stat-total { background: #f1f5f9; color: #2563eb; }
+.stat-card.stat-saldo { background: #f0fdf4; color: #0d9488; }
+.stat-card.stat-receita, .stat-card.stat-despesa, .stat-card.stat-paga, .stat-card.stat-total, .stat-card.stat-saldo {
+    color: inherit;
 }
 
 /* Filtros */
+.filters-form {
+    background: #232b32;
+    border-radius: 16px;
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
 .filters-form .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
 }
 .filters-form label {
-    font-weight: 500;
+    color: #cbd5e1;
+    font-weight: 600;
 }
-.filter-buttons {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-}
-.card-header {
-    background: #f8f9fa;
-    border-bottom: 1px solid #eee;
-}
-
-/* Melhorias nos filtros */
 .filters-form input[type="text"],
 .filters-form select,
 .filters-form input[type="date"] {
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    background: #f9fafb;
-    transition: border 0.2s;
+    border-radius: 12px;
+    border: none;
+    background: #232b32;
+    color: #f3f4f6;
+    min-height: 48px;
+    font-size: 1.08rem;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 1px 2px #0000000a;
 }
 .filters-form input[type="text"]:focus,
 .filters-form select:focus,
 .filters-form input[type="date"]:focus {
-    border-color: #007bff;
-    background: #fff;
+    background: #181f25;
+    outline: 2px solid #2563eb;
 }
-.filters-form .form-control,
 .filters-form .form-select {
-    min-height: 38px;
+    color: #f3f4f6;
 }
 .filters-form .filter-buttons .btn {
-    min-width: 110px;
-    font-weight: 500;
-    border-radius: 8px;
-}
-.filters-form .filter-buttons .btn-primary {
-    background: #2563eb;
+    min-width: 120px;
+    font-weight: 600;
+    border-radius: 12px;
+    font-size: 1.08rem;
+    margin-right: 0.7rem;
     border: none;
+    box-shadow: 0 1px 2px #0000000a;
 }
-.filters-form .filter-buttons .btn-primary:hover {
-    background: #1d4ed8;
+.filters-form .btn-primary {
+    background: #ef4444;
+    color: #fff;
 }
-.filters-form .filter-buttons .btn-secondary {
-    background: #6b7280;
-    border: none;
+.filters-form .btn-primary:hover {
+    background: #dc2626;
 }
-.filters-form .filter-buttons .btn-secondary:hover {
-    background: #4b5563;
+.filters-form .btn-secondary {
+    background: #374151;
+    color: #fff;
+}
+.filters-form .btn-secondary:hover {
+    background: #1e293b;
 }
 
 /* Tabela */
+.table-responsive {
+    background: #232b32;
+    border-radius: 16px;
+    padding: 0.5rem 0.5rem 0 0.5rem;
+}
+.table {
+    background: transparent;
+    color: #f3f4f6;
+    border-radius: 16px;
+    margin-bottom: 0;
+}
 .table thead th {
-    background: #f4f6fa;
-    font-weight: 600;
-    border-bottom: 2px solid #e3e6ed;
+    background: #232b32;
+    color: #cbd5e1;
+    font-weight: 700;
+    border: none;
+    font-size: 1.08rem;
+    padding-top: 1.1rem;
+    padding-bottom: 1.1rem;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background: #232b32;
+}
+.table-striped tbody tr:nth-of-type(even) {
+    background: #181f25;
 }
 .table-hover tbody tr:hover {
-    background: #e0f2fe;
+    background: #374151 !important;
     transition: background 0.2s;
 }
 .badge {
     border-radius: 8px;
     padding: 0.4em 0.8em;
-    font-size: 0.95em;
+    font-size: 0.97em;
+    font-weight: 600;
 }
-.badge-success { background: #e6f4ea; color: #218838; }
-.badge-danger { background: #fbeaea; color: #c82333; }
-.badge-warning { background: #fff6e0; color: #856404; }
-.badge-info { background: #e7f3fa; color: #117a8b; }
+.badge-success { background: #22c55e; color: #fff; }
+.badge-danger { background: #ef4444; color: #fff; }
+.badge-warning { background: #f59e42; color: #fff; }
+.badge-info { background: #2563eb; color: #fff; }
+.text-success { color: #22c55e !important; }
+.text-danger { color: #ef4444 !important; }
+.text-muted { color: #94a3b8 !important; }
 .btn-sm {
-    padding: 0.25rem 0.7rem;
-    font-size: 0.95em;
-    border-radius: 8px !important;
+    padding: 0.35rem 0.9rem;
+    font-size: 1.05em;
+    border-radius: 10px !important;
+    font-weight: 600;
 }
 .btn-success.btn-sm {
     background: #22c55e;
@@ -267,43 +312,80 @@ include '../../templates/header.php';
 
 /* Paginação */
 .pagination .page-link {
-    color: #007bff;
-    border-color: #dee2e6;
-    border-radius: 8px !important;
+    color: #2563eb;
+    border-color: #232b32;
+    border-radius: 10px !important;
     margin: 0 2px;
+    background: #232b32;
 }
 .pagination .page-item.active .page-link {
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #2563eb;
+    border-color: #2563eb;
     color: #fff;
 }
 .pagination .page-link:hover {
-    background-color: #e9ecef;
+    background-color: #181f25;
+}
+
+/* Cabeçalho */
+.d-flex.justify-content-between.align-items-center.mb-4 {
+    margin-bottom: 2.2rem !important;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 h1 {
+    color: #fff;
+    font-size: 2.1rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 p {
+    color: #cbd5e1;
+    font-size: 1.1rem;
+    margin-bottom: 0;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 .btn {
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.08rem;
+    margin-left: 0.7rem;
+    min-width: 140px;
+    min-height: 48px;
+    box-shadow: 0 1px 2px #0000000a;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 .btn-success {
+    background: #22c55e;
+    color: #fff;
+    border: none;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 .btn-success:hover {
+    background: #16a34a;
+}
+.d-flex.justify-content-between.align-items-center.mb-4 .btn-primary:hover {
+    background: #1d4ed8;
 }
 
 /* Responsividade */
+@media (max-width: 1200px) {
+    .stats-grid { flex-direction: column; gap: 1rem; }
+    .stat-card { min-width: 100%; }
+}
+@media (max-width: 991px) {
+    .filters-form { padding: 1rem 0.7rem 0.5rem 0.7rem; }
+    .d-flex.justify-content-between.align-items-center.mb-4 .btn {
+        min-width: 100px;
+        min-height: 40px;
+        font-size: 1rem;
+    }
+}
 @media (max-width: 768px) {
-    .stats-grid {
-        flex-direction: column;
-        gap: 0.7rem;
-    }
-    .stat-card {
-        min-width: 100%;
-        padding: 1rem;
-    }
-    .filters-form .row > div {
-        margin-bottom: 1rem;
-    }
-    .btn-group {
-        flex-direction: column;
-    }
-    .btn-group .btn {
-        margin-bottom: 0.3rem;
-        margin-right: 0 !important;
-    }
-    .btn-group .btn:last-child {
-        margin-bottom: 0;
-    }
+    .stats-grid { flex-direction: column; gap: 0.7rem; }
+    .stat-card { min-width: 100%; padding: 1rem; }
+    .filters-form { padding: 1rem 0.3rem 0.3rem 0.3rem; }
+    .table-responsive { padding: 0.2rem; }
 }
 </style>
 
@@ -324,31 +406,27 @@ include '../../templates/header.php';
 
 <!-- Resumo -->
 <div class="stats-grid mb-4">
-    <div class="stat-card">
-        <div class="stat-value text-success"><?php echo formatMoney($totals['total_receitas']); ?></div>
-        <div class="stat-label">Total Receitas</div>
+    <div class="stat-card stat-receita">
+        <div class="stat-label"><i class="fa fa-arrow-down"></i> Receitas</div>
+        <div class="stat-value"><?php echo formatMoney($totals['total_receitas']); ?></div>
     </div>
-    
-    <div class="stat-card">
-        <div class="stat-value text-danger"><?php echo formatMoney($totals['total_despesas']); ?></div>
-        <div class="stat-label">Total Despesas</div>
+    <div class="stat-card stat-despesa">
+        <div class="stat-label"><i class="fa fa-arrow-up"></i> Despesas</div>
+        <div class="stat-value"><?php echo formatMoney($totals['total_despesas']); ?></div>
     </div>
-    
-    <div class="stat-card">
-        <div class="stat-value text-success"><?php echo formatMoney($totals['receitas_pagas']); ?></div>
-        <div class="stat-label">Receitas Pagas</div>
+    <div class="stat-card stat-paga">
+        <div class="stat-label"><i class="fa fa-check-circle"></i> Receitas Pagas</div>
+        <div class="stat-value"><?php echo formatMoney($totals['receitas_pagas']); ?></div>
     </div>
-    
-    <div class="stat-card">
-        <div class="stat-value text-danger"><?php echo formatMoney($totals['despesas_pagas']); ?></div>
-        <div class="stat-label">Despesas Pagas</div>
+    <div class="stat-card stat-paga">
+        <div class="stat-label"><i class="fa fa-check-circle"></i> Despesas Pagas</div>
+        <div class="stat-value"><?php echo formatMoney($totals['despesas_pagas']); ?></div>
     </div>
-    
-    <div class="stat-card">
+    <div class="stat-card stat-saldo">
+        <div class="stat-label"><i class="fa fa-wallet"></i> Saldo Total</div>
         <div class="stat-value <?php echo ($totals['total_receitas'] - $totals['total_despesas']) >= 0 ? 'text-success' : 'text-danger'; ?>">
             <?php echo formatMoney($totals['total_receitas'] - $totals['total_despesas']); ?>
         </div>
-        <div class="stat-label">Saldo Total</div>
     </div>
 </div>
 
