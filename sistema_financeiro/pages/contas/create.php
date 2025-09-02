@@ -327,9 +327,7 @@ include '../../templates/header.php';
                                    name="descricao" 
                                    value="<?php echo htmlspecialchars($form_data['descricao']); ?>"
                                    required>
-                            <div class="invalid-feedback">
-                                Por favor, informe a descrição.
-                            </div>
+                      
                         </div>
                     </div>
 
@@ -344,9 +342,7 @@ include '../../templates/header.php';
                                    value="<?php echo htmlspecialchars($form_data['valor']); ?>"
                                    placeholder="R$ 0,00"
                                    required>
-                            <div class="invalid-feedback">
-                                Por favor, informe o valor.
-                            </div>
+                         
                         </div>
                         <div class="form-group">
                             <label for="data_vencimento" class="form-label">Data de Vencimento *</label>
@@ -357,12 +353,16 @@ include '../../templates/header.php';
                                    value="<?php echo htmlspecialchars($form_data['data_vencimento']); ?>"
                                    placeholder="dd/mm/aaaa"
                                    required>
-                            <div class="invalid-feedback">
-                                Por favor, informe a data de vencimento.
-                            </div>
+                         
                         </div>
                     </div>
-                    
+                      <div class="form-group">
+                        <label for="observacoes" class="form-label">Observações</label>
+                        <textarea class="form-control" 
+                                  id="observacoes" 
+                                  name="observacoes" 
+                                  rows="3"><?php echo htmlspecialchars($form_data['observacoes']); ?></textarea>
+                    </div>
                     <!-- Opções de Parcelamento -->
                     <div class="row">
                         <div class="col-12">
@@ -406,13 +406,7 @@ include '../../templates/header.php';
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="observacoes" class="form-label">Observações</label>
-                        <textarea class="form-control" 
-                                  id="observacoes" 
-                                  name="observacoes" 
-                                  rows="3"><?php echo htmlspecialchars($form_data['observacoes']); ?></textarea>
-                    </div>
+                  
                     
                     <div class="form-group d-flex flex-wrap">
                         <button type="submit" class="btn btn-success">Criar Conta</button>
