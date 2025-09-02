@@ -413,14 +413,12 @@ include '../../templates/header.php';
 </div>
 
 
-<div class="d-flex align-items-center mb-4">
-    <div class="dropdown">
-                <div>
-                <a href="create.php" class="btn btn-success">Nova Conta</a>
-                <a href="create.php?parcelado=1" class="btn btn-primary">Conta Parcelada</a>
-            </div>
-            
-    <button class="btn btn-filtros" type="button" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#painelFiltros" aria-expanded="false" aria-controls="painelFiltros">
+<div class="d-flex align-items-center mb-4 gap-2">
+    <a href="create.php" class="btn btn-success">Nova Conta</a>
+    <a href="create.php?parcelado=1" class="btn btn-primary">Conta Parcelada</a>
+    <button class="btn btn-filtros" type="button" id="btnFiltros" 
+            data-bs-toggle="collapse" data-bs-target="#painelFiltros" 
+            aria-expanded="false" aria-controls="painelFiltros">
         <i class="fa fa-filter"></i> Filtros
     </button>
 </div>
