@@ -139,115 +139,94 @@ include '../../templates/header.php';
 ?>
     <link rel="stylesheet" href="../../assets/css/style.css">
 <style>
-/* Botões principais */
-.btn-success {
+/* --- Modern Form Style --- */
+.form-modern .form-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.3rem;
+}
+.form-modern .form-control,
+.form-modern .form-select,
+.form-modern textarea {
+    background: #f3f4f6;
+    border: none;
+    border-radius: 12px;
+    min-height: 48px;
+    font-size: 1.08rem;
+    color: #222;
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.2rem;
+    box-shadow: none;
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.form-modern .form-control:focus,
+.form-modern .form-select:focus,
+.form-modern textarea:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px #2563eb33;
+    outline: none;
+}
+.form-modern .form-check-input {
+    border-radius: 6px;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.2em;
+}
+.form-modern .form-check-label {
+    font-weight: 500;
+    color: #444;
+    margin-left: 0.5em;
+}
+.form-modern .form-group {
+    margin-bottom: 0.5rem;
+}
+.form-modern .btn-success,
+.form-modern .btn-secondary {
+    min-width: 140px;
+    min-height: 48px;
+    font-size: 1.08rem;
+    border-radius: 12px;
+    font-weight: 600;
+    margin-right: 0.7rem;
+}
+.form-modern .btn-success {
     background: #22c55e;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background 0.2s;
 }
-.btn-success:hover {
+.form-modern .btn-success:hover {
     background: #16a34a;
 }
-.btn-secondary {
+.form-modern .btn-secondary {
     background: #6b7280;
     border: none;
-    border-radius: 8px;
-    font-weight: 600;
-    transition: background 0.2s;
     color: #fff;
 }
-.btn-secondary:hover {
+.form-modern .btn-secondary:hover {
     background: #4b5563;
     color: #fff;
 }
-.btn-voltar {
+.form-modern textarea.form-control {
+    min-height: 90px;
+    resize: vertical;
+    padding-top: 1rem;
+}
+.form-modern .form-control-static {
     background: #f3f4f6;
-    color: #374151;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    padding: 0.6rem 1.4rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    transition: background 0.2s, color 0.2s;
+    border-radius: 12px;
+    min-height: 48px;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-}
-.btn-voltar:hover {
-    background: #e5e7eb;
-    color: #111827;
-    text-decoration: none;
-}
-.btn-voltar i {
-    font-size: 1.1em;
-}
-
-/* Ajuste dos cards */
-.card {
-    border-radius: 14px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: none;
-}
-.card-header {
-    background: #f8f9fa;
-    border-bottom: 1px solid #eee;
-    border-radius: 14px 14px 0 0;
-    font-weight: 600;
-}
-
-/* Inputs e selects */
-.form-control, .form-select {
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    background: #f9fafb;
-    transition: border 0.2s;
-}
-.form-control:focus, .form-select:focus {
-    border-color: #2563eb;
-    background: #fff;
-}
-.form-label {
-    font-weight: 500;
-}
-.form-check-input {
-    border-radius: 4px;
-}
-
-/* Valor por parcela */
-#valor_parcela {
-    font-weight: 600;
+    padding: 0 1.1rem;
+    font-size: 1.08rem;
     color: #2563eb;
-    background: #f4f6fa;
-    border-radius: 8px;
-    padding: 0.5em 1em;
-    display: inline-block;
-    min-width: 110px;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
 }
-
-/* Badge categorias */
-.badge {
-    border-radius: 8px;
-    padding: 0.4em 0.8em;
-    font-size: 0.95em;
-    color: #fff !important;
-    font-weight: 500;
-    display: inline-block;
-}
-.badge-success { background: #22c55e !important; }
-.badge-danger { background: #ef4444 !important; }
-.me-1 { margin-right: 0.5rem !important; }
-.mb-1 { margin-bottom: 0.3rem !important; }
-
-/* Responsividade */
 @media (max-width: 991px) {
-    .col-md-8, .col-md-4 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-    .card {
-        margin-bottom: 1.5rem;
+    .form-modern .btn-success,
+    .form-modern .btn-secondary {
+        width: 100%;
+        margin-bottom: 0.7rem;
     }
 }
 </style>
@@ -283,7 +262,7 @@ include '../../templates/header.php';
                     </div>
                 <?php endif; ?>
                 
-                <form method="POST" class="needs-validation" id="conta-form" novalidate>
+                <form method="POST" class="needs-validation form-modern" id="conta-form" novalidate>
                     <div class="row">
                         <div class="col-md-8">
                             <div class="form-group">
@@ -377,17 +356,15 @@ include '../../templates/header.php';
                     <!-- Opções de Parcelamento -->
                     <div class="row">
                         <div class="col-12">
-                            <div class="form-group">
-                                <div class="form-check">
-                                    <input type="checkbox" 
-                                           class="form-check-input" 
-                                           id="parcelado" 
-                                           name="parcelado" 
-                                           <?php echo $form_data['parcelado'] ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="parcelado">
-                                        Conta parcelada
-                                    </label>
-                                </div>
+                            <div class="form-group d-flex align-items-center">
+                                <input type="checkbox" 
+                                       class="form-check-input" 
+                                       id="parcelado" 
+                                       name="parcelado" 
+                                       <?php echo $form_data['parcelado'] ? 'checked' : ''; ?>>
+                                <label class="form-check-label" for="parcelado">
+                                    Conta parcelada
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -427,7 +404,7 @@ include '../../templates/header.php';
                                   rows="3"><?php echo htmlspecialchars($form_data['observacoes']); ?></textarea>
                     </div>
                     
-                    <div class="form-group">
+                    <div class="form-group d-flex flex-wrap">
                         <button type="submit" class="btn btn-success">Criar Conta</button>
                         <a href="index.php" class="btn btn-secondary">Cancelar</a>
                     </div>
