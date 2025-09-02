@@ -143,7 +143,7 @@ include '../../templates/header.php';
 .form-modern .form-label {
     font-weight: 600;
     color: #374151;
-    margin-bottom: 0.6rem; /* aumentado */
+    margin-bottom: 0.3rem;
 }
 .form-modern .form-control,
 .form-modern .form-select,
@@ -151,11 +151,11 @@ include '../../templates/header.php';
     background: #f3f4f6;
     border: none;
     border-radius: 12px;
-    min-height: 56px; /* aumentado */
-    font-size: 1.13rem; /* levemente maior */
+    min-height: 48px;
+    font-size: 1.08rem;
     color: #222;
-    padding: 1.2rem 1.3rem; /* aumentado */
-    margin-bottom: 1.7rem; /* aumentado */
+    padding: 0.9rem 1.1rem;
+    margin-bottom: 1.2rem;
     box-shadow: none;
     transition: background 0.2s, box-shadow 0.2s;
 }
@@ -168,26 +168,26 @@ include '../../templates/header.php';
 }
 .form-modern .form-check-input {
     border-radius: 6px;
-    width: 1.3em;
-    height: 1.3em;
-    margin-top: 0.3em;
+    width: 1.2em;
+    height: 1.2em;
+    margin-top: 0.2em;
 }
 .form-modern .form-check-label {
     font-weight: 500;
     color: #444;
-    margin-left: 0.7em;
+    margin-left: 0.5em;
 }
 .form-modern .form-group {
-    margin-bottom: 1.2rem; /* aumentado */
+    margin-bottom: 0.5rem;
 }
 .form-modern .btn-success,
 .form-modern .btn-secondary {
-    min-width: 160px;
-    min-height: 56px;
-    font-size: 1.13rem;
+    min-width: 140px;
+    min-height: 48px;
+    font-size: 1.08rem;
     border-radius: 12px;
     font-weight: 600;
-    margin-right: 1.1rem;
+    margin-right: 0.7rem;
 }
 .form-modern .btn-success {
     background: #22c55e;
@@ -206,27 +206,27 @@ include '../../templates/header.php';
     color: #fff;
 }
 .form-modern textarea.form-control {
-    min-height: 110px;
+    min-height: 90px;
     resize: vertical;
-    padding-top: 1.2rem;
+    padding-top: 1rem;
 }
 .form-modern .form-control-static {
     background: #f3f4f6;
     border-radius: 12px;
-    min-height: 56px;
+    min-height: 48px;
     display: flex;
     align-items: center;
-    padding: 0 1.3rem;
-    font-size: 1.13rem;
+    padding: 0 1.1rem;
+    font-size: 1.08rem;
     color: #2563eb;
     font-weight: 600;
-    margin-bottom: 1.7rem;
+    margin-bottom: 1.2rem;
 }
 @media (max-width: 991px) {
     .form-modern .btn-success,
     .form-modern .btn-secondary {
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: 0.7rem;
     }
 }
 </style>
