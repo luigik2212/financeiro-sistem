@@ -115,10 +115,115 @@ try {
 include '../../templates/header.php';
 ?>
 
+<link rel="stylesheet" href="../../assets/css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<style>
+/* Resumo */
+.stats-grid {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+.stat-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 1.2rem 2rem;
+    min-width: 180px;
+    flex: 1 1 180px;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+}
+.stat-label {
+    font-size: 1rem;
+    color: #888;
+}
+
+/* Filtros */
+.filters-form .form-group {
+    margin-bottom: 1rem;
+}
+.filters-form label {
+    font-weight: 500;
+}
+.filter-buttons {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+.card-header {
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+/* Tabela */
+.table thead th {
+    background: #f4f6fa;
+    font-weight: 600;
+    border-bottom: 2px solid #e3e6ed;
+}
+.table-hover tbody tr:hover {
+    background: #f1f7ff;
+    transition: background 0.2s;
+}
+.badge {
+    border-radius: 8px;
+    padding: 0.4em 0.8em;
+    font-size: 0.95em;
+}
+.badge-success { background: #e6f4ea; color: #218838; }
+.badge-danger { background: #fbeaea; color: #c82333; }
+.badge-warning { background: #fff6e0; color: #856404; }
+.badge-info { background: #e7f3fa; color: #117a8b; }
+.btn-sm {
+    padding: 0.25rem 0.7rem;
+    font-size: 0.95em;
+}
+.btn-delete {
+    transition: background 0.2s;
+}
+.btn-delete:hover {
+    background: #c82333 !important;
+    color: #fff !important;
+}
+
+/* Paginação */
+.pagination .page-link {
+    color: #007bff;
+    border-color: #dee2e6;
+}
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+}
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .stats-grid {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+    .stat-card {
+        min-width: 100%;
+        padding: 1rem;
+    }
+}
+</style>
+
 <div class="row">
     <div class="col-12">
         <div class="d-flex justify-content-between align-items-center mb-4">
-                <link rel="stylesheet" href="../../assets/css/style.css">
             <div>
                 <h1>Contas</h1>
                 <p class="text-muted">Gerenciar receitas e despesas</p>
@@ -278,15 +383,18 @@ include '../../templates/header.php';
 <div class="row">
     <div class="col-12">
         <div class="card">
-            <div class="card-header">
-                <h5>Lista de Contas (<?php echo $total_records; ?>)</h5>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Lista de Contas (<?php echo $total_records; ?>)</h5>
+                <a href="create.php" class="btn btn-success btn-sm">
+                    <i class="fa fa-plus"></i> Nova Conta
+                </a>
             </div>
             <div class="card-body">
                 <?php if (empty($contas)): ?>
                     <p class="text-muted text-center">Nenhuma conta encontrada.</p>
                 <?php else: ?>
                     <div class="table-responsive">
-                        <table class="table table-striped table-hover">
+                        <table class="table table-striped table-hover align-middle">
                             <thead>
                                 <tr>
                                     <th>Descrição</th>
@@ -323,6 +431,7 @@ include '../../templates/header.php';
                                         </td>
                                         <td>
                                             <span class="badge <?php echo $conta['tipo'] === 'receita' ? 'badge-success' : 'badge-danger'; ?>">
+                                                <i class="fa <?php echo $conta['tipo'] === 'receita' ? 'fa-arrow-down' : 'fa-arrow-up'; ?>"></i>
                                                 <?php echo ucfirst($conta['tipo']); ?>
                                             </span>
                                         </td>
@@ -345,26 +454,28 @@ include '../../templates/header.php';
                                             <?php endif; ?>
                                         </td>
                                         <td>
+                                            <div class="btn-group" role="group">
                                             <?php if ($status === 'pendente'): ?>
                                                 <a href="pay.php?id=<?php echo $conta['id']; ?>" 
                                                    class="btn btn-success btn-sm" 
                                                    title="Marcar como pago">
-                                                    Pagar
+                                                    <i class="fa fa-check"></i>
                                                 </a>
                                             <?php endif; ?>
                                             
                                             <a href="edit.php?id=<?php echo $conta['id']; ?>" 
                                                class="btn btn-primary btn-sm" 
                                                title="Editar">
-                                                Editar
+                                                <i class="fa fa-edit"></i>
                                             </a>
                                             
                                             <a href="delete.php?id=<?php echo $conta['id']; ?>" 
                                                class="btn btn-danger btn-sm btn-delete" 
                                                title="Excluir"
                                                data-message="Tem certeza que deseja excluir a conta '<?php echo htmlspecialchars($conta['descricao']); ?>'?">
-                                                Excluir
+                                                <i class="fa fa-trash"></i>
                                             </a>
+                                            </div>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -379,7 +490,7 @@ include '../../templates/header.php';
                                 <?php if ($filters['page'] > 1): ?>
                                     <li class="page-item">
                                         <a class="page-link" href="?<?php echo http_build_query(array_merge($filters, ['page' => $filters['page'] - 1])); ?>">
-                                            Anterior
+                                            <i class="fa fa-chevron-left"></i> Anterior
                                         </a>
                                     </li>
                                 <?php endif; ?>
@@ -395,7 +506,7 @@ include '../../templates/header.php';
                                 <?php if ($filters['page'] < $total_pages): ?>
                                     <li class="page-item">
                                         <a class="page-link" href="?<?php echo http_build_query(array_merge($filters, ['page' => $filters['page'] + 1])); ?>">
-                                            Próxima
+                                            Próxima <i class="fa fa-chevron-right"></i>
                                         </a>
                                     </li>
                                 <?php endif; ?>
@@ -407,22 +518,6 @@ include '../../templates/header.php';
         </div>
     </div>
 </div>
-
-<style>
-.pagination .page-link {
-    color: var(--primary-color);
-    border-color: var(--border-color);
-}
-
-.pagination .page-item.active .page-link {
-    background-color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.pagination .page-link:hover {
-    background-color: var(--light-color);
-}
-</style>
 
 <?php include '../../templates/footer.php'; ?>
 
