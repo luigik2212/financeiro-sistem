@@ -135,6 +135,10 @@ include '../../templates/header.php';
     flex: 1 1 180px;
     text-align: center;
     margin-bottom: 0.5rem;
+    transition: box-shadow 0.2s;
+}
+.stat-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
 }
 .stat-value {
     font-size: 1.6rem;
@@ -163,6 +167,45 @@ include '../../templates/header.php';
     border-bottom: 1px solid #eee;
 }
 
+/* Melhorias nos filtros */
+.filters-form input[type="text"],
+.filters-form select,
+.filters-form input[type="date"] {
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    background: #f9fafb;
+    transition: border 0.2s;
+}
+.filters-form input[type="text"]:focus,
+.filters-form select:focus,
+.filters-form input[type="date"]:focus {
+    border-color: #007bff;
+    background: #fff;
+}
+.filters-form .form-control,
+.filters-form .form-select {
+    min-height: 38px;
+}
+.filters-form .filter-buttons .btn {
+    min-width: 110px;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.filters-form .filter-buttons .btn-primary {
+    background: #2563eb;
+    border: none;
+}
+.filters-form .filter-buttons .btn-primary:hover {
+    background: #1d4ed8;
+}
+.filters-form .filter-buttons .btn-secondary {
+    background: #6b7280;
+    border: none;
+}
+.filters-form .filter-buttons .btn-secondary:hover {
+    background: #4b5563;
+}
+
 /* Tabela */
 .table thead th {
     background: #f4f6fa;
@@ -170,7 +213,7 @@ include '../../templates/header.php';
     border-bottom: 2px solid #e3e6ed;
 }
 .table-hover tbody tr:hover {
-    background: #f1f7ff;
+    background: #e0f2fe;
     transition: background 0.2s;
 }
 .badge {
@@ -185,6 +228,28 @@ include '../../templates/header.php';
 .btn-sm {
     padding: 0.25rem 0.7rem;
     font-size: 0.95em;
+    border-radius: 8px !important;
+}
+.btn-success.btn-sm {
+    background: #22c55e;
+    border: none;
+}
+.btn-success.btn-sm:hover {
+    background: #16a34a;
+}
+.btn-primary.btn-sm {
+    background: #2563eb;
+    border: none;
+}
+.btn-primary.btn-sm:hover {
+    background: #1d4ed8;
+}
+.btn-danger.btn-sm {
+    background: #ef4444;
+    border: none;
+}
+.btn-danger.btn-sm:hover {
+    background: #b91c1c;
 }
 .btn-delete {
     transition: background 0.2s;
@@ -193,11 +258,19 @@ include '../../templates/header.php';
     background: #c82333 !important;
     color: #fff !important;
 }
+.btn-group .btn {
+    margin-right: 0.3rem;
+}
+.btn-group .btn:last-child {
+    margin-right: 0;
+}
 
 /* Paginação */
 .pagination .page-link {
     color: #007bff;
     border-color: #dee2e6;
+    border-radius: 8px !important;
+    margin: 0 2px;
 }
 .pagination .page-item.active .page-link {
     background-color: #007bff;
@@ -217,6 +290,19 @@ include '../../templates/header.php';
     .stat-card {
         min-width: 100%;
         padding: 1rem;
+    }
+    .filters-form .row > div {
+        margin-bottom: 1rem;
+    }
+    .btn-group {
+        flex-direction: column;
+    }
+    .btn-group .btn {
+        margin-bottom: 0.3rem;
+        margin-right: 0 !important;
+    }
+    .btn-group .btn:last-child {
+        margin-bottom: 0;
     }
 }
 </style>
