@@ -412,55 +412,6 @@ include '../../templates/header.php';
             </div>
         </div>
     </div>
-    
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h6>Dicas</h6>
-            </div>
-            <div class="card-body">
-                <ul>
-                    <li><strong>Receitas:</strong> Salários, vendas, investimentos</li>
-                    <li><strong>Despesas:</strong> Contas, compras, gastos</li>
-                    <li><strong>Parcelamento:</strong> Divide o valor total em parcelas mensais</li>
-                    <li><strong>Categorias:</strong> Ajudam a organizar e gerar relatórios</li>
-                </ul>
-            </div>
-        </div>
-        
-        <?php if (!empty($categorias)): ?>
-            <div class="card">
-                <div class="card-header">
-                    <h6>Categorias Disponíveis</h6>
-                </div>
-                <div class="card-body">
-                    <?php
-                    $receitas = array_filter($categorias, function($c) { return $c['tipo'] === 'receita'; });
-                    $despesas = array_filter($categorias, function($c) { return $c['tipo'] === 'despesa'; });
-                    ?>
-                    
-                    <p><strong>Receitas:</strong></p>
-                    <div class="mb-3">
-                        <?php foreach ($receitas as $categoria): ?>
-                            <span class="badge badge-success me-1 mb-1" style="background-color: <?php echo $categoria['cor']; ?>">
-                                <?php echo htmlspecialchars($categoria['nome']); ?>
-                            </span>
-                        <?php endforeach; ?>
-                    </div>
-                    
-                    <p><strong>Despesas:</strong></p>
-                    <div>
-                        <?php foreach ($despesas as $categoria): ?>
-                            <span class="badge badge-danger me-1 mb-1" style="background-color: <?php echo $categoria['cor']; ?>">
-                                <?php echo htmlspecialchars($categoria['nome']); ?>
-                            </span>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-            </div>
-        <?php endif; ?>
-    </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
