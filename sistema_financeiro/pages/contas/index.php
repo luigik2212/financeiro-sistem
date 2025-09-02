@@ -21,6 +21,7 @@ $filters = [
     'categoria' => (int)($_GET['categoria'] ?? 0),
     'data_inicio' => sanitize($_GET['data_inicio'] ?? ''),
     'data_fim' => sanitize($_GET['data_fim'] ?? ''),
+    'vencimentos_recentes' => sanitize($_GET['vencimentos_recentes'] ?? ''),
     'page' => max(1, (int)($_GET['page'] ?? 1))
 ];
 
@@ -65,6 +66,12 @@ try {
     if (!empty($filters['data_fim'])) {
         $where_conditions[] = "c.data_vencimento <= ?";
         $params[] = dateToMysql($filters['data_fim']);
+    }
+    
+    if (!empty($filters['vencimentos_recentes'])) {
+        $days = (int)$filters['vencimentos_recentes'];
+        $where_conditions[] = "c.data_vencimento BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL ? DAY)";
+        $params[] = $days;
     }
     
     $where_clause = "WHERE " . implode(" AND ", $where_conditions);
@@ -159,69 +166,107 @@ include '../../templates/header.php';
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h6>Filtros</h6>
+                <h6 class="mb-0">Filtros</h6>
             </div>
             <div class="card-body">
-                <form method="GET" class="row">
-                    <div class="col-md-3">
-                        <input type="text" 
-                               class="form-control" 
-                               name="search" 
-                               placeholder="Buscar descrição..."
-                               value="<?php echo htmlspecialchars($filters['search']); ?>">
-                    </div>
-                    
-                    <div class="col-md-2">
-                        <select class="form-control form-select" name="tipo">
-                            <option value="">Todos os tipos</option>
-                            <option value="receita" <?php echo $filters['tipo'] === 'receita' ? 'selected' : ''; ?>>Receita</option>
-                            <option value="despesa" <?php echo $filters['tipo'] === 'despesa' ? 'selected' : ''; ?>>Despesa</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-2">
-                        <select class="form-control form-select" name="status">
-                            <option value="">Todos os status</option>
-                            <option value="pendente" <?php echo $filters['status'] === 'pendente' ? 'selected' : ''; ?>>Pendente</option>
-                            <option value="pago" <?php echo $filters['status'] === 'pago' ? 'selected' : ''; ?>>Pago</option>
-                            <option value="vencido" <?php echo $filters['status'] === 'vencido' ? 'selected' : ''; ?>>Vencido</option>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-2">
-                        <select class="form-control form-select" name="categoria">
-                            <option value="">Todas categorias</option>
-                            <?php foreach ($categorias as $categoria): ?>
-                                <option value="<?php echo $categoria['id']; ?>" 
-                                        <?php echo $filters['categoria'] == $categoria['id'] ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($categoria['nome']); ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <div class="row">
-                            <div class="col-6">
+                <form method="GET" class="filters-form">
+                    <div class="row">
+                        <div class="col-md-4 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Buscar</label>
                                 <input type="text" 
-                                       class="form-control date-input" 
-                                       name="data_inicio" 
-                                       placeholder="Data início"
-                                       value="<?php echo htmlspecialchars($filters['data_inicio']); ?>">
+                                       class="form-control" 
+                                       name="search" 
+                                       placeholder="Buscar descrição..."
+                                       value="<?php echo htmlspecialchars($filters['search']); ?>">
                             </div>
-                            <div class="col-6">
-                                <input type="text" 
-                                       class="form-control date-input" 
-                                       name="data_fim" 
-                                       placeholder="Data fim"
-                                       value="<?php echo htmlspecialchars($filters['data_fim']); ?>">
+                        </div>
+                        
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label">Tipo</label>
+                                <select class="form-control form-select" name="tipo">
+                                    <option value="">Todos os tipos</option>
+                                    <option value="receita" <?php echo $filters['tipo'] === 'receita' ? 'selected' : ''; ?>>Receita</option>
+                                    <option value="despesa" <?php echo $filters['tipo'] === 'despesa' ? 'selected' : ''; ?>>Despesa</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <select class="form-control form-select" name="status">
+                                    <option value="">Todos os status</option>
+                                    <option value="pendente" <?php echo $filters['status'] === 'pendente' ? 'selected' : ''; ?>>Pendente</option>
+                                    <option value="pago" <?php echo $filters['status'] === 'pago' ? 'selected' : ''; ?>>Pago</option>
+                                    <option value="vencido" <?php echo $filters['status'] === 'vencido' ? 'selected' : ''; ?>>Vencido</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-2">
+                            <div class="form-group">
+                                <label class="form-label">Categoria</label>
+                                <select class="form-control form-select" name="categoria">
+                                    <option value="">Todas categorias</option>
+                                    <?php foreach ($categorias as $categoria): ?>
+                                        <option value="<?php echo $categoria['id']; ?>" 
+                                                <?php echo $filters['categoria'] == $categoria['id'] ? 'selected' : ''; ?>>
+                                            <?php echo htmlspecialchars($categoria['nome']); ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Vencimentos Recentes</label>
+                                <select class="form-control form-select" name="vencimentos_recentes">
+                                    <option value="">Todos os vencimentos</option>
+                                    <option value="7" <?php echo $filters['vencimentos_recentes'] === '7' ? 'selected' : ''; ?>>Próximos 7 dias</option>
+                                    <option value="15" <?php echo $filters['vencimentos_recentes'] === '15' ? 'selected' : ''; ?>>Próximos 15 dias</option>
+                                    <option value="30" <?php echo $filters['vencimentos_recentes'] === '30' ? 'selected' : ''; ?>>Próximos 30 dias</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                     
-                    <div class="col-12 mt-3">
-                        <button type="submit" class="btn btn-primary">Filtrar</button>
-                        <a href="index.php" class="btn btn-secondary">Limpar</a>
+                    <div class="row">
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Data Início</label>
+                                <input type="date" 
+                                       class="form-control" 
+                                       name="data_inicio" 
+                                       value="<?php echo htmlspecialchars($filters['data_inicio']); ?>">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 col-lg-3">
+                            <div class="form-group">
+                                <label class="form-label">Data Fim</label>
+                                <input type="date" 
+                                       class="form-control" 
+                                       name="data_fim" 
+                                       value="<?php echo htmlspecialchars($filters['data_fim']); ?>">
+                            </div>
+                        </div>
+                        
+                        <div class="col-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label">&nbsp;</label>
+                                <div class="filter-buttons">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-search"></i> Filtrar
+                                    </button>
+                                    <a href="index.php" class="btn btn-secondary">
+                                        <i class="fas fa-times"></i> Limpar
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
