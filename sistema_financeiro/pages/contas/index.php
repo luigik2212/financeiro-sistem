@@ -373,33 +373,10 @@ include '../../templates/header.php';
 
 <div class="row">
     <div class="col-12">
-        <div class="d-flex justify-content-start align-items-center mb-4 gap-3">
-            <!-- Botão principal com dropdown -->
-            <div class="dropdown">
-                <button class="btn btn-main dropdown-toggle" type="button" id="btnCriarConta" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-plus"></i> Criar Conta
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="btnCriarConta">
-                    <li>
-                        <a class="dropdown-item" href="create.php">Conta Simples</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="create.php?parcelado=1">Conta Parcelada</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- Botão Filtros -->
-            <button class="btn btn-filtros" type="button" id="btnFiltros" data-bs-toggle="collapse" data-bs-target="#painelFiltros" aria-expanded="false" aria-controls="painelFiltros">
-                <i class="fa fa-filter"></i> Filtros
-            </button>
-            <!-- Botão Exportar (exemplo, pode remover se não quiser) -->
-            <a href="exportar.php" class="btn btn-secondary">
-                <i class="fa fa-download"></i> Exportar
-            </a>
-        </div>
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5 class="mb-0">Lista de Contas (<?php echo $total_records; ?>)</h5>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1>Contas</h1>
+                <p class="text-muted">Gerenciar receitas e despesas</p>
             </div>
         </div>
     </div>
