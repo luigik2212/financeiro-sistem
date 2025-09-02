@@ -222,6 +222,26 @@ include '../../templates/header.php';
     font-weight: 600;
     margin-bottom: 1.2rem;
 }
+
+/* Espaçamento vertical entre grupos de campos */
+.form-modern .form-row-group {
+    margin-bottom: 2.2rem; /* Aproximadamente um dedo de espaçamento */
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.form-modern .form-row-group .form-group {
+    flex: 1 1 0;
+    min-width: 180px;
+    margin-bottom: 0;
+}
+@media (max-width: 768px) {
+    .form-modern .form-row-group {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+}
+
 @media (max-width: 991px) {
     .form-modern .btn-success,
     .form-modern .btn-secondary {
@@ -238,9 +258,6 @@ include '../../templates/header.php';
                 <h1 class="mb-1"><?php echo $is_parcelado ? 'Nova Conta Parcelada' : 'Nova Conta'; ?></h1>
                 <p class="text-muted mb-0">Adicionar nova <?php echo $is_parcelado ? 'conta parcelada' : 'receita ou despesa'; ?></p>
             </div>
-            <a href="index.php" class="btn btn-voltar mt-3 mt-md-0">
-                <i class="fa fa-arrow-left"></i> Voltar
-            </a>
         </div>
     </div>
 </div>
@@ -263,92 +280,85 @@ include '../../templates/header.php';
                 <?php endif; ?>
                 
                 <form method="POST" class="needs-validation form-modern" id="conta-form" novalidate>
-                    <div class="row">
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="descricao" class="form-label">Descrição *</label>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="descricao" 
-                                       name="descricao" 
-                                       value="<?php echo htmlspecialchars($form_data['descricao']); ?>"
-                                       required>
-                                <div class="invalid-feedback">
-                                    Por favor, informe a descrição.
-                                </div>
-                            </div>
+                    <!-- Primeira linha: Tipo e Categoria -->
+                    <div class="form-row-group">
+                        <div class="form-group">
+                            <label for="tipo" class="form-label">Tipo *</label>
+                            <select class="form-control form-select" id="tipo" name="tipo" required>
+                                <option value="receita" <?php echo $form_data['tipo'] === 'receita' ? 'selected' : ''; ?>>
+                                    Receita
+                                </option>
+                                <option value="despesa" <?php echo $form_data['tipo'] === 'despesa' ? 'selected' : ''; ?>>
+                                    Despesa
+                                </option>
+                            </select>
                         </div>
-                        
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="categoria_id" class="form-label">Categoria</label>
-                                <select class="form-control form-select" id="categoria_id" name="categoria_id">
-                                    <option value="">Selecione uma categoria</option>
-                                    <?php
-                                    $current_type = '';
-                                    foreach ($categorias as $categoria):
-                                        if ($categoria['tipo'] !== $current_type):
-                                            if ($current_type !== '') echo '</optgroup>';
-                                            echo '<optgroup label="' . ucfirst($categoria['tipo']) . 's">';
-                                            $current_type = $categoria['tipo'];
-                                        endif;
-                                    ?>
-                                        <option value="<?php echo $categoria['id']; ?>" 
-                                                data-tipo="<?php echo $categoria['tipo']; ?>"
-                                                <?php echo $form_data['categoria_id'] == $categoria['id'] ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($categoria['nome']); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                    <?php if ($current_type !== '') echo '</optgroup>'; ?>
-                                </select>
+                        <div class="form-group">
+                            <label for="categoria_id" class="form-label">Categoria</label>
+                            <select class="form-control form-select" id="categoria_id" name="categoria_id">
+                                <option value="">Selecione uma categoria</option>
+                                <?php
+                                $current_type = '';
+                                foreach ($categorias as $categoria):
+                                    if ($categoria['tipo'] !== $current_type):
+                                        if ($current_type !== '') echo '</optgroup>';
+                                        echo '<optgroup label="' . ucfirst($categoria['tipo']) . 's">';
+                                        $current_type = $categoria['tipo'];
+                                    endif;
+                                ?>
+                                    <option value="<?php echo $categoria['id']; ?>" 
+                                            data-tipo="<?php echo $categoria['tipo']; ?>"
+                                            <?php echo $form_data['categoria_id'] == $categoria['id'] ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($categoria['nome']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                                <?php if ($current_type !== '') echo '</optgroup>'; ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Segunda linha: Descrição -->
+                    <div class="form-row-group">
+                        <div class="form-group" style="flex:2">
+                            <label for="descricao" class="form-label">Descrição *</label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="descricao" 
+                                   name="descricao" 
+                                   value="<?php echo htmlspecialchars($form_data['descricao']); ?>"
+                                   required>
+                            <div class="invalid-feedback">
+                                Por favor, informe a descrição.
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="tipo" class="form-label">Tipo *</label>
-                                <select class="form-control form-select" id="tipo" name="tipo" required>
-                                    <option value="receita" <?php echo $form_data['tipo'] === 'receita' ? 'selected' : ''; ?>>
-                                        Receita
-                                    </option>
-                                    <option value="despesa" <?php echo $form_data['tipo'] === 'despesa' ? 'selected' : ''; ?>>
-                                        Despesa
-                                    </option>
-                                </select>
+
+                    <!-- Terceira linha: Valor e Data de Vencimento -->
+                    <div class="form-row-group">
+                        <div class="form-group">
+                            <label for="valor" class="form-label">Valor *</label>
+                            <input type="text" 
+                                   class="form-control money-input" 
+                                   id="valor" 
+                                   name="valor" 
+                                   value="<?php echo htmlspecialchars($form_data['valor']); ?>"
+                                   placeholder="R$ 0,00"
+                                   required>
+                            <div class="invalid-feedback">
+                                Por favor, informe o valor.
                             </div>
                         </div>
-                        
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="valor" class="form-label">Valor *</label>
-                                <input type="text" 
-                                       class="form-control money-input" 
-                                       id="valor" 
-                                       name="valor" 
-                                       value="<?php echo htmlspecialchars($form_data['valor']); ?>"
-                                       placeholder="R$ 0,00"
-                                       required>
-                                <div class="invalid-feedback">
-                                    Por favor, informe o valor.
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="data_vencimento" class="form-label">Data de Vencimento *</label>
-                                <input type="text" 
-                                       class="form-control date-input" 
-                                       id="data_vencimento" 
-                                       name="data_vencimento" 
-                                       value="<?php echo htmlspecialchars($form_data['data_vencimento']); ?>"
-                                       placeholder="dd/mm/aaaa"
-                                       required>
-                                <div class="invalid-feedback">
-                                    Por favor, informe a data de vencimento.
-                                </div>
+                        <div class="form-group">
+                            <label for="data_vencimento" class="form-label">Data de Vencimento *</label>
+                            <input type="text" 
+                                   class="form-control date-input" 
+                                   id="data_vencimento" 
+                                   name="data_vencimento" 
+                                   value="<?php echo htmlspecialchars($form_data['data_vencimento']); ?>"
+                                   placeholder="dd/mm/aaaa"
+                                   required>
+                            <div class="invalid-feedback">
+                                Por favor, informe a data de vencimento.
                             </div>
                         </div>
                     </div>
